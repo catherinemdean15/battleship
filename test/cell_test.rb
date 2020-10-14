@@ -82,7 +82,7 @@ class CellTest < MiniTest::Test
   def test_it_reveals_ship
     cell_2 = Cell.new("C3")
     cell_2.place_ship(@cruiser)
-
+    
     assert_equal "S", cell_2.render(true)
   end
 end

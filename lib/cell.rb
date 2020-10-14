@@ -31,7 +31,7 @@ class Cell
   def render(show = false)
     if @ship == nil && @miss == false && show == false
       "."
-    elsif @ship == nil && @miss == false && show == true
+    elsif @miss == false && show == true
       "S"
     elsif @ship == nil && @miss == true
       "M"
