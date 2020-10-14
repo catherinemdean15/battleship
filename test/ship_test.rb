@@ -20,7 +20,7 @@ class ShipTest < MiniTest::Test
   end
 
   def test_it_checks_health
-    assert_equal @cruiser.length, @cruiser.health
+    assert_equal 3, @cruiser.health
   end
 
   def test_it_checks_if_sunk
