@@ -21,4 +21,8 @@ class Board
        "D4" => Cell.new("D4")
     }
   end
+
+  def valid_coordinate?(coordinates)
+    @cells[coordinates] != nil
+  end
 end
