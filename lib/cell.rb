@@ -29,8 +29,10 @@ class Cell
   end
 
   def render(show = false)
-    if @ship == nil && @miss == false
+    if @ship == nil && @miss == false && show == false
       "."
+    elsif @ship == nil && @miss == false && show == true
+      "S"
     elsif @ship == nil && @miss == true
       "M"
     elsif @ship.sunk?
@@ -42,3 +44,5 @@ class Cell
     end
   end
 end
+
+# working out kinks with boolean
