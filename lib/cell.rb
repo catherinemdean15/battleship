@@ -44,5 +44,3 @@ class Cell
     end
   end
 end
-
-# working out kinks with boolean
