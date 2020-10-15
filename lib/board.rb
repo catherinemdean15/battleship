@@ -25,4 +25,11 @@ class Board
   def valid_coordinate?(coordinates)
     @cells[coordinates] != nil
   end
+
+  def valid_placement?(ship, coordinates)
+# require 'pry';binding.pry
+    if ship.name == "Cruiser" && (coordinates.count == 3) && (coordinates.sort == coordinates) && (coordinates.each_cons(3) { |a, b| "a + 1" })
+    elsif ship.name == "Submarine" && (coordinates.count == 2) && (coordinates.sort == coordinates) && (coordinates.each_cons(2) { |a, b| "a + 1" })
+    end
+  end
 end
