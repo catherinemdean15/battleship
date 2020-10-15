@@ -27,9 +27,11 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
+    horizontal = [A, B, C, D]
+    vertical = [1, 2, 3, 4]
 # require 'pry';binding.pry
-    if ship.name == "Cruiser" && (coordinates.count == 3) && (coordinates.sort == coordinates) && (coordinates.each_cons(3) { |a, b| "a + 1" })
-    elsif ship.name == "Submarine" && (coordinates.count == 2) && (coordinates.sort == coordinates) && (coordinates.each_cons(2) { |a, b| "a + 1" })
+    if ship.name == "Cruiser" && (coordinates.count == 3) && (coordinates.sort == coordinates)
+    elsif ship.name == "Submarine" && (coordinates.count == 2) && (coordinates.sort == coordinates)
     end
   end
 end
