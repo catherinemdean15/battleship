@@ -15,7 +15,8 @@ class Board
         letter + num.to_s
       end
     end
-    puts coordinates.to_s
+    coordinates.to_s
+    #remember what the heck you did to make it print 2x
   end
 
   def cells
@@ -23,6 +24,7 @@ class Board
       @cells = Cell.new(key)
     end
     @cells
+    #.to_h?
   end
 
   def valid_coordinate?(coordinates)
