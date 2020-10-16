@@ -45,6 +45,11 @@ class BoardTest < MiniTest::Test
     refute @board.valid_placement?(@submarine, ["C2", "D3"])
   end
 
+  def test_consecutive?
+    assert @board.alid_placement?(@submarine, ["A1", "A2"])
+    refute @board.valid_placement?(@cruiser, ["A1", "B2", "C3"])
+  end
+
   def test_valid_placement
     assert @board.valid_placement?(@submarine, ["A1", "A2"])
     assert @board.valid_placement?(@cruiser, ["B1", "C1", "D1"])
