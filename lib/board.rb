@@ -20,11 +20,12 @@ class Board
   end
 
   def cell_setup
+    cell_hash = {}
       # require 'pry';binding.pry
     board_size.map do |key|
-      @cells = Cell.new(key)
+      cell_hash[key] = Cell.new(key)
     end
-    @cells.to_h?
+    cell_hash
   end
 
   def valid_coordinate?(coordinates)
