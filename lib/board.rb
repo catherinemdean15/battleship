@@ -1,37 +1,28 @@
 class Board
-  attr_reader :cells,
-              :horizontal,
-              :vertical
+  attr_reader :cells
   def initialize
-    @cells = cell_setup
-    @horizontal = (1..4).to_a
-    @vertical = ("A".."D").to_a
-    @board_layout = board_size
+    @cells = {
+       "A1" => Cell.new("A1"),
+       "A2" => Cell.new("A2"),
+       "A3" => Cell.new("A3"),
+       "A4" => Cell.new("A4"),
+       "B1" => Cell.new("B1"),
+       "B2" => Cell.new("B2"),
+       "B3" => Cell.new("B3"),
+       "B4" => Cell.new("B4"),
+       "C1" => Cell.new("C1"),
+       "C2" => Cell.new("C2"),
+       "C3" => Cell.new("C3"),
+       "C4" => Cell.new("C4"),
+       "D1" => Cell.new("D1"),
+       "D2" => Cell.new("D2"),
+       "D3" => Cell.new("D3"),
+       "D4" => Cell.new("D4")
+    }
   end
-
-  def board_size
-    coordinates = @vertical.map do |letter|
-      @horizontal.map do |num|
-        letter + num.to_s
-      end
-    end
-    coordinates.to_s
-    #remember what the heck you did to make it print 2x
-  end
-
-  def cell_setup
-    cell_hash = {}
-      # require 'pry';binding.pry
-    board_size.map do |key|
-      cell_hash[key] = Cell.new(key)
-    end
-    cell_hash
-  end
-
   def valid_coordinate?(coordinates)
     @cells[coordinates] != nil
   end
-
   def consecutive?(coordinates)
     numbers = []
     letters = []
@@ -42,9 +33,7 @@ class Board
     ((numbers.first..numbers.last).to_a == numbers) ^
     ((letters.first..letters.last).to_a == letters)
   end
-
-  def valid_placement?(ship, coordinates)
-    if ship.name == "Cruiser" &&
+  def valid_placement?(ship, coordinates)if ship.name == "Cruiser" &&
       coordinates.count == 3 &&
       consecutive?(coordinates)
       true
