@@ -54,5 +54,13 @@ class Board
       output_string += (num + 1).to_s + " "
     end
 
-    vertical.times
+    #vertical.times
+
+    def place(ship, coordinates)
+      if valid_placement?(ship, coordinates)
+        coordinates.each do |coordinate|
+          @cells[coordinate].place_ship(ship)
+        end
+      end
+    end
 end
