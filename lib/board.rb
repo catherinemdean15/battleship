@@ -49,17 +49,6 @@ class Board
       false
     end
   end
-  
-  def render(show_ships = false)
-    horizontal = [1..4]
-    vertical = ["A".."D"]
-
-    horizontal.times do |num|
-      output_string += (num + 1).to_s + " "
-    end
-  end
-
-    #vertical.times
 
     def place(ship, coordinates)
       if valid_placement?(ship, coordinates)
@@ -69,4 +58,17 @@ class Board
       end
     end
 
+
+
+
+
+
+    def render(show_ships = false)
+      horizontal = [1..4]
+      vertical = ["A".."D"]
+
+      horizontal.times do |num|
+        output_string += (num + 1).to_s + " "
+      end
+    end
 end
