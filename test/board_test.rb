@@ -41,6 +41,7 @@ class BoardTest < MiniTest::Test
   # end
 
   def test_valid_placement_diagonal
+    #use uniq function
     refute @board.valid_placement?(@cruiser, ["A1", "B2", "C3"])
     refute @board.valid_placement?(@submarine, ["C2", "D3"])
   end

@@ -24,7 +24,6 @@ class Board
   def valid_coordinate?(coordinates)
     @cells[coordinates] != nil
   end
-
   def consecutive?(coordinates)
     numbers = []
     letters = []
@@ -35,9 +34,7 @@ class Board
     ((numbers.first..numbers.last).to_a == numbers) ^
     ((letters.first..letters.last).to_a == letters)
   end
-
-  def valid_placement?(ship, coordinates)
-    if ship.name == "Cruiser" &&
+  def valid_placement?(ship, coordinates)if ship.name == "Cruiser" &&
       coordinates.count == 3 &&
       consecutive?(coordinates)
       true
