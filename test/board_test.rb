@@ -28,6 +28,11 @@ class BoardTest < MiniTest::Test
     refute @board.valid_coordinate?("A22")
   end
 
+  def test_consecutive?
+    assert @board.valid_placement?(@submarine, ["A1", "A2"])
+    refute @board.valid_placement?(@cruiser, ["A1", "B2", "C3"])
+  end
+
   def test_valid_placement_ship_length
     refute @board.valid_placement?(@cruiser, ["A1", "A2"])
     refute @board.valid_placement?(@submarine, ["A2", "A3", "A4"])
@@ -43,11 +48,6 @@ class BoardTest < MiniTest::Test
   def test_valid_placement_diagonal
     refute @board.valid_placement?(@cruiser, ["A1", "B2", "C3"])
     refute @board.valid_placement?(@submarine, ["C2", "D3"])
-  end
-
-  def test_consecutive?
-    assert @board.alid_placement?(@submarine, ["A1", "A2"])
-    refute @board.valid_placement?(@cruiser, ["A1", "B2", "C3"])
   end
 
   def test_valid_placement
