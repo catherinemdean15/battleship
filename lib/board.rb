@@ -39,11 +39,17 @@ class Board
   def valid_placement?(ship, coordinates)
     if ship.name == "Cruiser" &&
       coordinates.count == 3 &&
-      consecutive?(coordinates)
+      consecutive?(coordinates) &&
+      coordinates.all? do |coordinate|
+        @cells[coordinate].empty?
+      end
       true
     elsif ship.name == "Submarine" &&
       coordinates.count == 2 &&
-       consecutive?(coordinates)
+       consecutive?(coordinates)&&
+       coordinates.all? do |coordinate|
+         @cells[coordinate].empty?
+       end
        true
     else
       false
@@ -57,10 +63,6 @@ class Board
         end
       end
     end
-
-
-
-
 
 
     def render(show_ships = false)
