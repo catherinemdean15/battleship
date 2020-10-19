@@ -39,14 +39,13 @@ class BoardTest < MiniTest::Test
   end
 
   def test_valid_placement_is_consecutive
-    refute @board.consecutive?(@cruiser, ["A1", "A2", "A4"])
-    refute @board.consecutive?(@submarine, ["A1", "C1"])
-    refute @board.consecutive?(@cruiser, ["A3", "A2", "A1"])
-    refute @board.consecutive?(@submarine, ["C1", "B1"])
+    refute @board.consecutive?(["A1", "A2", "A4"])
+    refute @board.consecutive?(["A1", "C1"])
+    refute @board.consecutive?(["A3", "A2", "A1"])
+    refute @board.consecutive?(["C1", "B1"])
   end
 
   def test_valid_placement_diagonal
-    #use uniq function
     refute @board.valid_placement?(@cruiser, ["A1", "B2", "C3"])
     refute @board.valid_placement?(@submarine, ["C2", "D3"])
   end
@@ -78,4 +77,5 @@ class BoardTest < MiniTest::Test
     @board.place(@cruiser, ["A1", "A2", "A3"])
     refute @board.valid_placement?(@submarine, ["A1", "B1"])
   end
+
 end
