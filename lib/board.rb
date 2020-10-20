@@ -1,25 +1,19 @@
 class Board
   attr_reader :cells
   def initialize
-    @cells = {
-       "A1" => Cell.new("A1"),
-       "A2" => Cell.new("A2"),
-       "A3" => Cell.new("A3"),
-       "A4" => Cell.new("A4"),
-       "B1" => Cell.new("B1"),
-       "B2" => Cell.new("B2"),
-       "B3" => Cell.new("B3"),
-       "B4" => Cell.new("B4"),
-       "C1" => Cell.new("C1"),
-       "C2" => Cell.new("C2"),
-       "C3" => Cell.new("C3"),
-       "C4" => Cell.new("C4"),
-       "D1" => Cell.new("D1"),
-       "D2" => Cell.new("D2"),
-       "D3" => Cell.new("D3"),
-       "D4" => Cell.new("D4")
-    }
-  end
+      @cells = {}
+      create_board
+    end
+
+    def create_board
+      letters = ["A", "B", "C", "D"]
+      numbers = [1, 2, 3, 4]
+      letters.each do |letter|
+      numbers.each do |number|
+        @cells["#{letter}#{number}"] = Cell.new("#{letter}#{number}")
+      end
+      end
+    end
 
   def valid_coordinate?(coordinates)
     @cells[coordinates] != nil
@@ -65,12 +59,21 @@ class Board
     end
 
 
-    def render(show_ships = false)
-      horizontal = [1..4]
-      vertical = ["A".."D"]
-
-      horizontal.times do |num|
-        output_string += (num + 1).to_s + " "
+  def render(show = false)
+    horizontal = [1, 2, 3, 4]
+    vertical = ["A", "B", "C", "D"]
+    output_string = " "
+      horizontal.each do |number|
+        output_string += number.to_s + " "
+      end
+    vertical.each do |letter|
+      output_string += "\n#{letter} "
+      horizontal.each do |number|
+          output_string += "#{@cells["#{letter}#{number}"].render(show)} "
       end
     end
+    output_string + "\n"
+  end
+
+
 end
