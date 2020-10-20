@@ -10,7 +10,7 @@ class Menu
     puts "Welcome to BATTLESHIP\n
           Enter p to play. Enter q to quit."
     print "> "
-    answer = .getschomp
+    answer = gets.chomp
     if answer == "p"
       #dynamic?
       puts "Great! Let's play!"
@@ -19,6 +19,7 @@ class Menu
     else
       puts "Are you sure about that?"
     end
+  end
 
   # def computer_ship_placement
   def user_ship_placement
