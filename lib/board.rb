@@ -65,12 +65,22 @@ class Board
     end
 
 
-    def render(show_ships = false)
-      horizontal = [1..4]
-      vertical = ["A".."D"]
-
-      horizontal.times do |num|
-        output_string += (num + 1).to_s + " "
+  def render(show_ships = false)
+    horizontal = [1, 2, 3, 4]
+    vertical = ["A", "B", "C", "D"]
+    output_string = " "
+      horizontal.each do |number|
+        output_string += number.to_s + " "
       end
+      # require 'pry'; binding.pry
+      vertical.each do |letter|
+        output_string += "\n#{letter} . . . ."
+          # horizontal.each do |number|
+          # coordinate = vertical[letter] + number.to_s
+          # output_string += @cells[coordinate].render(show_ships) + " "
+      end
+
+      output_string + " \n"
     end
+
 end
