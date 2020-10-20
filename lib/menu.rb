@@ -53,37 +53,6 @@ class Menu
       end
     end
   end
-  #   letters = ["A", "B", "C","D"]
-  #   numbers = [1, 2, 3, 4]
-  #   placed_cells = 0
-  #   until placed_cells == 2
-  #     first_coordinate = "#{letters[rand(letters.count)]}#{numbers[rand(numbers.count)]}"
-  #     second_coordinate = "#{(first_coordinate[0])}#{(first_coordinate[1].to_i) + 1}"
-  #     if @board_computer.valid_placement?(@submarine_computer,[first_coordinate, second_coordinate])
-  #       @board_computer.place(@submarine_computer, [first_coordinate, second_coordinate])
-  #       @board_computer.cells.values.each do |cell|
-  #         if !cell.empty?
-  #           placed_cells += 1
-  #         end
-  #       end
-  #     end
-  #   end
-  #   until placed_cells == 5
-  #     first_coordinate = "#{letters[rand(letters.count)]}#{numbers[rand(numbers.count)]}"
-  #     second_coordinate = "#{(first_coordinate[0])}#{(first_coordinate[1].to_i) + 1}"
-  #     third_coordinate = "#{(first_coordinate[0])}#{(first_coordinate[1].to_i) + 2}"
-  #     if @board_computer.valid_placement?(@cruiser_computer,[first_coordinate, second_coordinate, third_coordinate])
-  #       @board_computer.place(@cruiser_computer, [first_coordinate, second_coordinate, third_coordinate])
-  #       @board_computer.cells.values.each do |cell|
-  #         # require 'pry'; binding.pry
-  #         if !cell.empty?
-  #               placed_cells += 1
-  #         end
-  #       end
-  #     end
-  #   end
-  #   require 'pry'; binding.pry
-  # end
 
   def user_ship_placement
     puts "I have laid out my ships on the grid."
@@ -118,7 +87,6 @@ class Menu
     print "> "
     answer = gets.chomp
     if answer == "p"
-        #dynamic?
         puts "Great! Let's play!"
       elsif answer == "q"
         puts "Have a great day!"
@@ -130,6 +98,9 @@ class Menu
     puts @board_computer.render(true)
     user_ship_placement
     puts @board_player.render(true)
+    until (@sumbarine_player.sunk?) && (@cruiser_player.sunk?) ||
+          (@submarine_computer.sunk) && (@cruiser_computer.sunk?)
+    end 
   end
 
 
