@@ -23,20 +23,20 @@ class CellTest < MiniTest::Test
   end
 
   def test_cell_empty
-    assert_equal true, @cell.empty?
+    assert @cell.empty?
   end
 
   def test_cell_places_cruiser
     @cell.place_ship(@cruiser)
 
     assert_equal @cruiser, @cell.ship
-    assert_equal false, @cell.empty?
+    refute false, @cell.empty?
   end
 
   def test_if_cell_is_fired_upon
     @cell.place_ship(@cruiser)
 
-    assert_equal false, @cell.fired_upon?
+    refute false, @cell.fired_upon?
   end
 
   def test_cell_ship_health_when_fired_upon
@@ -44,7 +44,7 @@ class CellTest < MiniTest::Test
     @cell.fire_upon
 
     assert_equal 2, @cruiser.health
-    assert_equal true, @cell.fired_upon?
+    assert @cell.fired_upon?
   end
 
   def test_it_renders_when_not_fired_upon
@@ -85,4 +85,19 @@ class CellTest < MiniTest::Test
 
     assert_equal "S", cell_2.render(true)
   end
+
+  def test_it_has_been_hit_on_only_one_cell
+    cell_2 = Cell.new("C3")
+    cell_3 = Cell.new("B3")
+    cell_4 = Cell.new("A3")
+    cell_2.place_ship(@cruiser)
+    cell_3.place_ship(@cruiser)
+    cell_4.place_ship(@cruiser)
+    cell_2.fire_upon
+
+    assert_equal "H", cell_2.render
+    assert_equal ".", cell_3.render
+    assert_equal ".", cell_4.render
+  end
+
 end

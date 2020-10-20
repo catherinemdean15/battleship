@@ -6,6 +6,7 @@ class Cell
     @coordinates = coordinates
     @ship = nil
     @miss = false
+    @fired_upon = false
   end
 
   def empty?
@@ -17,14 +18,16 @@ class Cell
   end
 
   def fired_upon?
-    @ship.health != @ship.length
+    @fired_upon
   end
 
   def fire_upon
     if @ship == nil
        @miss = true
+       @fired_upon = true
     else
       @ship.hit
+      @fired_upon = true
     end
   end
 

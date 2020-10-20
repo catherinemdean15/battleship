@@ -15,6 +15,12 @@ class MenuTest < MiniTest::Test
     assert_instance_of Menu, @menu
   end
 
+  def test_it_starts
+    assert_equal nil, @menu.start
+  end
 
+  def test_computer_places_ships
+    assert_equal 5,  
+  end
 
-end 
+end
