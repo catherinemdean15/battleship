@@ -128,15 +128,13 @@ class Menu
     user_ship_placement
 
 
-    loop do
-    player_turn
-    sleep(1)
-    computer_turn
-    sleep(0.5)
+
     until @cruiser_player.sunk? && @submarine_player.sunk? ||
       @cruiser_computer.sunk? && @submarine_computer.sunk?
-    break
-    end
+      player_turn
+      sleep(1)
+      computer_turn
+      sleep(0.5)
     end
   end
 
