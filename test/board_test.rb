@@ -3,6 +3,7 @@ require 'minitest/pride'
 require './lib/ship'
 require './lib/cell'
 require './lib/board'
+require 'colorize'
 
 class BoardTest < MiniTest::Test
 

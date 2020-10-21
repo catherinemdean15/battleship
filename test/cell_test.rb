@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/ship'
 require './lib/cell'
+require 'colorize'
 
 class CellTest < MiniTest::Test
 
@@ -19,7 +20,7 @@ class CellTest < MiniTest::Test
   end
 
   def test_cell_has_ship
-    assert_equal nil, @cell.ship
+    assert_nil @cell.ship
   end
 
   def test_cell_empty
@@ -30,13 +31,13 @@ class CellTest < MiniTest::Test
     @cell.place_ship(@cruiser)
 
     assert_equal @cruiser, @cell.ship
-    refute false, @cell.empty?
+    refute @cell.empty?
   end
 
   def test_if_cell_is_fired_upon
     @cell.place_ship(@cruiser)
 
-    refute false, @cell.fired_upon?
+    refute @cell.fired_upon?
   end
 
   def test_cell_ship_health_when_fired_upon
@@ -52,15 +53,15 @@ class CellTest < MiniTest::Test
     cell_2 = Cell.new("C3")
     cell_2.place_ship(@cruiser)
 
-    assert_equal ".", cell_1.render
-    assert_equal ".", cell_2.render
+    assert_equal ".".cyan, cell_1.render
+    assert_equal ".".cyan, cell_2.render
   end
 
   def test_it_misses_when_empty_cell
     cell_1 = Cell.new("B4")
     cell_1.fire_upon
 
-    assert_equal "M", cell_1.render
+    assert_equal "M".blue, cell_1.render
   end
 
   def test_it_has_been_hit
@@ -68,7 +69,7 @@ class CellTest < MiniTest::Test
     cell_2.place_ship(@cruiser)
     cell_2.fire_upon
 
-    assert_equal "H", cell_2.render
+    assert_equal "H".yellow, cell_2.render
   end
 
   def test_it_has_been_hit_and_sunk
@@ -76,14 +77,14 @@ class CellTest < MiniTest::Test
     cell_2.place_ship(@cruiser)
     3.times { @cruiser.hit }
 
-    assert_equal "X", cell_2.render
+    assert_equal "X".red, cell_2.render
   end
 
   def test_it_reveals_ship
     cell_2 = Cell.new("C3")
     cell_2.place_ship(@cruiser)
 
-    assert_equal "S", cell_2.render(true)
+    assert_equal "S".green, cell_2.render(true)
   end
 
   def test_it_has_been_hit_on_only_one_cell
@@ -95,9 +96,9 @@ class CellTest < MiniTest::Test
     cell_4.place_ship(@cruiser)
     cell_2.fire_upon
 
-    assert_equal "H", cell_2.render
-    assert_equal ".", cell_3.render
-    assert_equal ".", cell_4.render
+    assert_equal "H".yellow, cell_2.render
+    assert_equal ".".cyan, cell_3.render
+    assert_equal ".".cyan, cell_4.render
   end
 
 end

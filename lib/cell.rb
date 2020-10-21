@@ -6,9 +6,9 @@ class Cell
 
   def initialize(coordinates)
     @coordinates = coordinates
-    @ship = nil
-    @miss = false
-    @fired_upon = false
+    @ship        = nil
+    @miss        = false
+    @fired_upon  = false
   end
 
   def empty?

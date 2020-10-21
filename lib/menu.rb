@@ -3,21 +3,16 @@ require './lib/cell'
 require './lib/board'
 require './lib/menu'
 
-
 class Menu
-  attr_reader :computer,
-              :user
 
   def initialize
-    @computer = computer
-    @user = user
-    @board_computer = Board.new
-    @board_player = Board.new
+    @board_computer     = Board.new
+    @board_player       = Board.new
     @submarine_computer = Ship.new("Submarine", 2)
-    @cruiser_computer = Ship.new("Cruiser", 3)
-    @submarine_player = Ship.new("Submarine", 2)
-    @cruiser_player= Ship.new("Cruiser", 3)
-    @not_fired_upon = @board_computer.cells.keys
+    @cruiser_computer   = Ship.new("Cruiser", 3)
+    @submarine_player   = Ship.new("Submarine", 2)
+    @cruiser_player     = Ship.new("Cruiser", 3)
+    @not_fired_upon     = @board_computer.cells.keys
   end
 
   def computer_submarine_placement
@@ -123,17 +118,21 @@ class Menu
 
 
   def start
-    puts "Welcome to BATTLESHIP\n
-          Enter p to play. Enter q to quit."
-    print "> "
-    answer = gets.chomp
-    if answer == "p"
-        puts "Great! Let's play!"
-      elsif answer == "q"
-        puts "Have a great day!"
-      else
-        puts "Are you sure about that?"
-    end
+    loop do
+      puts "Welcome to BATTLESHIP\n
+            Enter p to play. Enter q to quit."
+      print "> "
+      answer = gets.chomp
+      if answer == "p"
+          puts "Great! Let's play!"
+          break
+        elsif answer == "q"
+          puts "Have a great day!"
+          abort
+        else
+          puts "Are you sure about that?"
+        end
+      end
     computer_submarine_placement
     computer_cruiser_placement
     user_ship_placement

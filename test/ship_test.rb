@@ -24,7 +24,7 @@ class ShipTest < MiniTest::Test
   end
 
   def test_it_checks_if_sunk
-    assert_equal false, @cruiser.sunk?
+    refute @cruiser.sunk?
   end
 
   def test_check_it_can_take_hit
@@ -36,6 +36,6 @@ class ShipTest < MiniTest::Test
   def test_check_if_sunk_again
     3.times { @cruiser.hit }
 
-    assert_equal true, @cruiser.sunk?
+    assert @cruiser.sunk?
   end
 end
