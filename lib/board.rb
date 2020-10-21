@@ -26,8 +26,14 @@ class Board
       numbers << coordinate[1].to_i
       letters << coordinate[0].ord
     end
-    ((numbers.first..numbers.last).to_a == numbers) ^
-    ((letters.first..letters.last).to_a == letters)
+    (((numbers.first..numbers.last).to_a == numbers) &&
+        (letters.all? do |letter|
+          letter == letters[0]
+        end)) ^
+    (((letters.first..letters.last).to_a == letters) &&
+        (numbers.all? do |number|
+          number == numbers[0]
+        end))
   end
 
   def valid_placement?(ship, coordinates)
