@@ -149,25 +149,8 @@ class Menu
       puts "🚢🌊🌊🌊"
       sleep(0.3)
       end
-      # sleep(0.2)
-      # puts".."
-      # sleep(0.2)
-      # puts "...."
-      # sleep(0.2)
-      # puts ".."
-      # sleep(0.2)
-      # puts "."
       computer_turn
       sleep(0.5)
-      # puts "."
-      # sleep(0.2)
-      # puts".."
-      # sleep(0.2)
-      # puts "...."
-      # sleep(0.2)
-      # puts ".."
-      # sleep(0.2)
-      # puts "."
       2.times do
       puts "🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊"
       sleep(0.3)
