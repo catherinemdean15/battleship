@@ -2,32 +2,62 @@ require './lib/ship'
 require './lib/cell'
 require './lib/board'
 require './lib/menu'
-
+require 'colorize'
 
 class Menu
-  attr_reader :computer,
-              :user
 
   def initialize
-    @computer = computer
-    @user = user
-    @board_computer = Board.new
-    @board_player = Board.new
-    @submarine_computer = Ship.new("Submarine", 2)
-    @cruiser_computer = Ship.new("Cruiser", 3)
-    @submarine_player = Ship.new("Submarine", 2)
-    @cruiser_player= Ship.new("Cruiser", 3)
-    @not_fired_upon = @board_computer.cells.keys
+    @board_computer     = Board.new
+    @board_player       = Board.new
+    @computer_ship_1    = Ship.new("Submarine", 2)
+    @computer_ship_2    = Ship.new("Cruiser", 3)
+    @player_ship_1      = nil
+    @player_ship_2      = nil
+    @not_fired_upon     = @board_computer.cells.keys
+  end
+
+  def create_ships
+    puts "You may have two ships. Each must have a length between 2 and 4"
+    puts "What would you like to name your first ship?"
+    print "> "
+    player_ship_1_name = gets.chomp
+    player_ship_1_length = 0
+    loop do
+      puts "How long will your ship be?"
+      print "> "
+      player_ship_1_length = gets.chomp.to_i
+      if  player_ship_1_length < 5 && player_ship_1_length > 1
+        break
+      end
+      puts "Your ship length must be greater than 1 and less than 5".red
+    end
+    @player_ship_1 = Ship.new(player_ship_1_name, player_ship_1_length)
+    puts "That's a cool ship!".yellow
+    puts "What would you like to name your second ship?"
+    print "> "
+    player_ship_2_name = gets.chomp
+    player_ship_2_length = 0
+    loop do
+      puts "How long will your ship be?"
+      print "> "
+      player_ship_2_length = gets.chomp.to_i
+      if player_ship_2_length < 5 && player_ship_2_length > 1
+        break
+      end
+      puts "Your ship length must be greater than 1 and less than 5".red
+    end
+    @player_ship_2 = Ship.new(player_ship_2_name, player_ship_2_length)
+    puts "Nice!".yellow
   end
 
   def computer_submarine_placement
     loop do
       coordinates = []
-      until coordinates.count == @submarine_computer.length do
+      until coordinates.count == @computer_ship_1.length do
         coordinates << @board_computer.cells.keys[rand(@board_computer.cells.count)]
       end
-      if @board_computer.valid_placement?(@submarine_computer, coordinates)
-        @board_computer.place(@submarine_computer, coordinates)
+      if @board_computer.valid_placement?(@computer_ship_1, coordinates)
+        @board_computer.place(@computer_ship_1, coordinates)
         break
       end
     end
@@ -37,11 +67,11 @@ class Menu
   def computer_cruiser_placement
     loop do
       coordinates = []
-      until coordinates.count == @cruiser_computer.length do
+      until coordinates.count == @computer_ship_2.length do
         coordinates << @board_computer.cells.keys[rand(@board_computer.cells.count)]
       end
-      if @board_computer.valid_placement?(@cruiser_computer, coordinates)
-        @board_computer.place(@cruiser_computer, coordinates)
+      if @board_computer.valid_placement?(@computer_ship_2, coordinates)
+        @board_computer.place(@computer_ship_2, coordinates)
         break
       end
     end
@@ -50,27 +80,27 @@ class Menu
   def user_ship_placement
     puts "I have laid out my ships on the grid."
     puts "You now need to lay out your two ships."
-    puts "The Cruiser is three units long and the Submarine is two units long."
+    puts "Your #{@player_ship_1.name} is #{@player_ship_1.length} units long and your #{@player_ship_2.name} is #{@player_ship_2.length} units long."
     puts @board_player.render
-    puts "Enter the squares for the Cruiser (3 spaces):"
+    puts "Enter the squares for the #{@player_ship_1.name} (#{@player_ship_1.length} spaces):"
     print "> "
-    cruiser_coordinates = gets.chomp.split(" ")
-      until @board_player.valid_placement?(@cruiser_player, cruiser_coordinates)
+    ship_1_coordinates = gets.chomp.split(" ")
+      until @board_player.valid_placement?(@player_ship_1, ship_1_coordinates)
         puts "Those are invalid coordinates. Please try again:"
         print "> "
-        cruiser_coordinates = gets.chomp.split(" ")
+        ship_1_coordinates = gets.chomp.split(" ")
       end
-    @board_player.place(@cruiser_player, cruiser_coordinates)
+    @board_player.place(@player_ship_1, ship_1_coordinates)
     puts @board_player.render(true)
-    puts "Enter the squares for the Submarine (2 spaces):"
+    puts "Enter the squares for the #{@player_ship_2.name} (#{@player_ship_2.length} spaces):"
     print "> "
-    submarine_coordinates = gets.chomp.split(" ")
-      until @board_player.valid_placement?(@submarine_player, submarine_coordinates)
+    ship_2_coordinates = gets.chomp.split(" ")
+      until @board_player.valid_placement?(@player_ship_2, ship_2_coordinates)
         puts "Those are invalid coordinates. Please try again:"
         print "> "
-        submarine_coordinates = gets.chomp.split(" ")
+        ship_2_coordinates = gets.chomp.split(" ")
       end
-    @board_player.place(@submarine_player, submarine_coordinates)
+    @board_player.place(@player_ship_2, ship_2_coordinates)
   end
 
   def player_turn
@@ -123,25 +153,30 @@ class Menu
 
 
   def start
-    puts "Welcome to BATTLESHIP\n
-          Enter p to play. Enter q to quit."
-    print "> "
-    answer = gets.chomp
-    if answer == "p"
-        puts "Great! Let's play!"
-      elsif answer == "q"
-        puts "Have a great day!"
-      else
-        puts "Are you sure about that?"
-    end
+    loop do
+      puts "Welcome to BATTLESHIP\n
+            Enter p to play. Enter q to quit."
+      print "> "
+      answer = gets.chomp
+      if answer == "p"
+          puts "Great! Let's play!"
+          break
+        elsif answer == "q"
+          puts "Have a great day!"
+          abort
+        else
+          puts "Are you sure about that?"
+        end
+      end
+    create_ships
     computer_submarine_placement
     computer_cruiser_placement
     user_ship_placement
 
 
 
-    until @cruiser_player.sunk? && @submarine_player.sunk? ||
-      @cruiser_computer.sunk? && @submarine_computer.sunk?
+    until @player_ship_2.sunk? && @player_ship_1.sunk? ||
+      @computer_ship_2.sunk? && @computer_ship_1.sunk?
       player_turn
       2.times do
       puts "🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊"
@@ -149,25 +184,8 @@ class Menu
       puts "🚢🌊🌊🌊"
       sleep(0.3)
       end
-      # sleep(0.2)
-      # puts".."
-      # sleep(0.2)
-      # puts "...."
-      # sleep(0.2)
-      # puts ".."
-      # sleep(0.2)
-      # puts "."
       computer_turn
       sleep(0.5)
-      # puts "."
-      # sleep(0.2)
-      # puts".."
-      # sleep(0.2)
-      # puts "...."
-      # sleep(0.2)
-      # puts ".."
-      # sleep(0.2)
-      # puts "."
       2.times do
       puts "🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊"
       sleep(0.3)
@@ -176,14 +194,22 @@ class Menu
       end
     end
 
-    if @cruiser_player.sunk? && @submarine_player.sunk?
-      puts ".\n..\n....\n..\n.\n"
-      puts "I won! You stink!"
-      puts ".\n..\n....\n..\n.\n"
-    elsif @cruiser_computer.sunk? && @submarine_computer.sunk?
-      puts ".\n..\n....\n..\n.\n"
-      puts "You win! :( "
-      puts ".\n..\n....\n..\n.\n"
+    if @player_ship_2.sunk? && @player_ship_1.sunk?
+      puts "I won! You stink! 🥳 ".red.on_white
+      2.times do
+      puts "🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊"
+      sleep(0.3)
+      puts "🚢🌊🌊🌊"
+      sleep(0.3)
+      end
+    elsif @computer_ship_2.sunk? && @computer_ship_1.sunk?
+      puts "You win! 😭 ".red.on_white
+      2.times do
+      puts "🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊"
+      sleep(0.3)
+      puts "🚢🌊🌊🌊"
+      sleep(0.3)
+      end
     end
 
   end

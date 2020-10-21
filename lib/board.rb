@@ -1,19 +1,20 @@
 class Board
   attr_reader :cells
+
   def initialize
       @cells = {}
       create_board
-    end
+  end
 
-    def create_board
-      letters = ["A", "B", "C", "D"]
-      numbers = [1, 2, 3, 4]
-      letters.each do |letter|
-      numbers.each do |number|
-        @cells["#{letter}#{number}"] = Cell.new("#{letter}#{number}")
-      end
-      end
+  def create_board
+    letters = ["A", "B", "C", "D"]
+    numbers = [1, 2, 3, 4]
+    letters.each do |letter|
+    numbers.each do |number|
+      @cells["#{letter}#{number}"] = Cell.new("#{letter}#{number}")
     end
+    end
+  end
 
   def valid_coordinate?(coordinates)
     @cells[coordinates] != nil
@@ -37,16 +38,14 @@ class Board
   end
 
   def valid_placement?(ship, coordinates)
-    if ship.name == "Cruiser" &&
-      coordinates.count == 3 &&
-      consecutive?(coordinates) &&
+    if ship.length == coordinates.count &&
+      consecutive?(coordinates)         &&
       coordinates.all? do |coordinate|
         @cells[coordinate].empty?
       end
       true
-    elsif ship.name == "Submarine" &&
-      coordinates.count == 2 &&
-       consecutive?(coordinates)&&
+    elsif ship.length == coordinates.count &&
+       consecutive?(coordinates)           &&
        coordinates.all? do |coordinate|
          @cells[coordinate].empty?
        end
@@ -56,13 +55,13 @@ class Board
     end
   end
 
-    def place(ship, coordinates)
-      if valid_placement?(ship, coordinates)
-        coordinates.each do |coordinate|
-          @cells[coordinate].place_ship(ship)
-        end
+  def place(ship, coordinates)
+    if valid_placement?(ship, coordinates)
+      coordinates.each do |coordinate|
+        @cells[coordinate].place_ship(ship)
       end
     end
+  end
 
 
   def render(show = false)
