@@ -195,13 +195,21 @@ class Menu
     end
 
     if @player_ship_2.sunk? && @player_ship_1.sunk?
-      puts ".\n..\n....\n..\n.\n"
-      puts "I won! You stink!"
-      puts ".\n..\n....\n..\n.\n"
+      puts "I won! You stink! 🥳 ".red.on_white
+      2.times do
+      puts "🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊"
+      sleep(0.3)
+      puts "🚢🌊🌊🌊"
+      sleep(0.3)
+      end
     elsif @computer_ship_2.sunk? && @computer_ship_1.sunk?
-      puts ".\n..\n....\n..\n.\n"
-      puts "You win! :( "
-      puts ".\n..\n....\n..\n.\n"
+      puts "You win! 😭 ".red.on_white
+      2.times do
+      puts "🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊"
+      sleep(0.3)
+      puts "🚢🌊🌊🌊"
+      sleep(0.3)
+      end
     end
 
   end
