@@ -68,7 +68,7 @@ class Board
   def render(show = false)
     horizontal = [1, 2, 3, 4]
     vertical = ["A", "B", "C", "D"]
-    output_string = " "
+    output_string = "  "
       horizontal.each do |number|
         output_string += number.to_s + " "
       end
