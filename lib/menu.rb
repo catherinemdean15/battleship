@@ -72,7 +72,28 @@ class Menu
     @board_player.place(@submarine_player, submarine_coordinates)
   end
 
-
+  def player_turn
+    puts "=============COMPUTER BOARD============="
+    puts @board_computer.render
+    puts "==============PLAYER BOARD=============="
+    puts @board_player.render(true)
+    puts "Enter the coordinate for your shot"
+    print "> "
+    coordinate = gets.chomp
+      until @board_computer.valid_coordinate?(coordinate)
+        puts "Please enter a valid coordinate"
+        print "> "
+        coordinate = gets.chomp
+      end
+    @board_computer.cells[coordinate].fire_upon
+    if @board_computer.cells[coordinate].ship.sunk?
+      puts "Your shot on #{coordinate} sunk my #{@board_computer.cells[coordinate].ship.name}! Aw man!"
+    elsif @board_computer.cells[coordinate].ship != nil
+        puts "Your shot on #{coordinate} was a hit."
+    else
+      puts "Your shot on #{coordinate} was a miss."
+    end
+  end
 
   def start
     puts "Welcome to BATTLESHIP\n
@@ -88,11 +109,16 @@ class Menu
     end
     computer_submarine_placement
     computer_cruiser_placement
-    puts @board_computer.render(true)
     user_ship_placement
-    puts @board_player.render(true)
-    until (@sumbarine_player.sunk?) && (@cruiser_player.sunk?) ||
-          (@submarine_computer.sunk) && (@cruiser_computer.sunk?)
+
+
+    loop do
+    player_turn
+    computer_turn
+    end
+    until @cruiser_player.sunk? && @submarine_player.sunk? ||
+      @cruiser_computer.sunk? && @cruiser_computer.sunk?
+    break
     end
   end
 
