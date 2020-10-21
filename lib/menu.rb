@@ -86,14 +86,30 @@ class Menu
         coordinate = gets.chomp
       end
     @board_computer.cells[coordinate].fire_upon
-    if @board_computer.cells[coordinate].ship.sunk?
+    if @board_computer.cells[coordinate].ship != nil && @board_computer.cells[coordinate].ship.sunk?
       puts "Your shot on #{coordinate} sunk my #{@board_computer.cells[coordinate].ship.name}! Aw man!"
     elsif @board_computer.cells[coordinate].ship != nil
-        puts "Your shot on #{coordinate} was a hit."
+        puts "Your shot on #{coordinate} was a hit!"
     else
-      puts "Your shot on #{coordinate} was a miss."
+      puts "Your shot on #{coordinate} was a miss!"
     end
   end
+
+
+  def computer_turn
+      not_fired_upon = @board_computer.cells.keys
+      random_coordinate = not_fired_upon[rand(not_fired_upon.count)]
+      @board_player.cells[random_coordinate].fire_upon
+      not_fired_upon.delete(random_coordinate)
+      if @board_player.cells[random_coordinate].ship != nil && @board_player.cells[random_coordinate].ship.sunk?
+        puts "My shot on #{random_coordinate} sunk your #{@board_player.cells[random_coordinate].ship.name}! Woohoo!"
+      elsif @board_player.cells[random_coordinate].ship != nil
+          puts "My shot on #{random_coordinate} was a hit!"
+      else
+        puts "My shot on #{random_coordinate} was a miss!"
+      end
+  end
+
 
   def start
     puts "Welcome to BATTLESHIP\n
@@ -114,11 +130,13 @@ class Menu
 
     loop do
     player_turn
+    sleep(1)
     computer_turn
-    end
+    sleep(0.5)
     until @cruiser_player.sunk? && @submarine_player.sunk? ||
-      @cruiser_computer.sunk? && @cruiser_computer.sunk?
+      @cruiser_computer.sunk? && @submarine_computer.sunk?
     break
+    end
     end
   end
 
