@@ -17,6 +17,7 @@ class Menu
     @cruiser_computer = Ship.new("Cruiser", 3)
     @submarine_player = Ship.new("Submarine", 2)
     @cruiser_player= Ship.new("Cruiser", 3)
+    @not_fired_upon = @board_computer.cells.keys
   end
 
   def computer_submarine_placement
@@ -85,15 +86,41 @@ class Menu
         print "> "
         coordinate = gets.chomp
       end
+      if @board_computer.cells[coordinate].fired_upon?
+        puts "You have already fired upon that coordinate"
+        puts "Please enter a new coordinate"
+        print "> "
+        coordinate = gets.chomp
+        until @board_computer.valid_coordinate?(coordinate)
+          puts "Please enter a valid coordinate"
+          print "> "
+          coordinate = gets.chomp
+        end
+      end
     @board_computer.cells[coordinate].fire_upon
-    if @board_computer.cells[coordinate].ship.sunk?
+    if @board_computer.cells[coordinate].ship != nil && @board_computer.cells[coordinate].ship.sunk?
       puts "Your shot on #{coordinate} sunk my #{@board_computer.cells[coordinate].ship.name}! Aw man!"
     elsif @board_computer.cells[coordinate].ship != nil
-        puts "Your shot on #{coordinate} was a hit."
+        puts "Your shot on #{coordinate} was a hit!"
     else
-      puts "Your shot on #{coordinate} was a miss."
+      puts "Your shot on #{coordinate} was a miss!"
     end
   end
+
+
+  def computer_turn
+      random_coordinate = @not_fired_upon[rand(@not_fired_upon.count)]
+      @board_player.cells[random_coordinate].fire_upon
+      @not_fired_upon.delete(random_coordinate)
+      if @board_player.cells[random_coordinate].ship != nil && @board_player.cells[random_coordinate].ship.sunk?
+        puts "My shot on #{random_coordinate} sunk your #{@board_player.cells[random_coordinate].ship.name}! Woohoo!"
+      elsif @board_player.cells[random_coordinate].ship != nil
+          puts "My shot on #{random_coordinate} was a hit!"
+      else
+        puts "My shot on #{random_coordinate} was a miss!"
+      end
+  end
+
 
   def start
     puts "Welcome to BATTLESHIP\n
@@ -112,14 +139,53 @@ class Menu
     user_ship_placement
 
 
-    loop do
-    player_turn
-    computer_turn
-    end
+
     until @cruiser_player.sunk? && @submarine_player.sunk? ||
-      @cruiser_computer.sunk? && @cruiser_computer.sunk?
-    break
+      @cruiser_computer.sunk? && @submarine_computer.sunk?
+      player_turn
+      2.times do
+      puts "🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊"
+      sleep(0.3)
+      puts "🚢🌊🌊🌊"
+      sleep(0.3)
+      end
+      # sleep(0.2)
+      # puts".."
+      # sleep(0.2)
+      # puts "...."
+      # sleep(0.2)
+      # puts ".."
+      # sleep(0.2)
+      # puts "."
+      computer_turn
+      sleep(0.5)
+      # puts "."
+      # sleep(0.2)
+      # puts".."
+      # sleep(0.2)
+      # puts "...."
+      # sleep(0.2)
+      # puts ".."
+      # sleep(0.2)
+      # puts "."
+      2.times do
+      puts "🌊🌊🌊🌊🌊🌊🌊🌊🌊🌊"
+      sleep(0.3)
+      puts "🚢🌊🌊🌊"
+      sleep(0.3)
+      end
     end
+
+    if @cruiser_player.sunk? && @submarine_player.sunk?
+      puts ".\n..\n....\n..\n.\n"
+      puts "I won! You stink!"
+      puts ".\n..\n....\n..\n.\n"
+    elsif @cruiser_computer.sunk? && @submarine_computer.sunk?
+      puts ".\n..\n....\n..\n.\n"
+      puts "You win! :( "
+      puts ".\n..\n....\n..\n.\n"
+    end
+
   end
 
 
